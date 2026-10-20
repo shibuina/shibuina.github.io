@@ -7,10 +7,10 @@ subtitle: PhD student · <a href='https://computing.smu.edu.sg/'>School of Compu
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image_circular: true # crops the image to make it circular
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
+social: false # links are in the link row below the bio instead
 
 announcements:
   enabled: true # includes a list of news items
@@ -31,3 +31,10 @@ contribute to the open-source [Arena-Rosnav](https://github.com/Arena-Rosnav) pl
 
 Before SMU I was a research assistant at the National University of Singapore, and I received my B.Sc. in Information
 Technology from FPT University, Hanoi.
+
+<div class="link-row">
+  <a href="mailto:doducanh.2026@phdcs.smu.edu.sg"><i class="fa-solid fa-envelope"></i> Email</a>
+  <a href="https://github.com/shibuina"><i class="fa-brands fa-github"></i> GitHub</a>
+  <a href="https://huggingface.co/shibuina">🤗 Hugging Face</a>
+  <a href="/publications/"><i class="fa-solid fa-book"></i> Publications</a>
+</div>
