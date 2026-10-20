@@ -1,0 +1,7 @@
+# social media links shown on the about page (keys from the jekyll-socials plugin)
+email: doducanh.2026@phdcs.smu.edu.sg
+github_username: shibuina
+huggingface:
+  logo: https://huggingface.co/front/assets/huggingface_logo-noborder.svg
+  title: Hugging Face
+  url: https://huggingface.co/shibuina

@@ -1,37 +1,32 @@
-# Architect
+# shibuina.github.io
 
-This is the repository that contains source code for Arena website.
+Personal site of Đỗ Đức Anh, built with [al-folio](https://github.com/alshedivat/al-folio) v1.2 (Jekyll). The Arena 5.0
+project page that used to live at the root is in `arena5/` and is served at <https://shibuina.github.io/arena5/>.
 
-## Deploying on GitHub Pages
+## Editing
 
-To deploy this website using GitHub Pages:
+| What | Where |
+| --- | --- |
+| Bio, photo | `_pages/about.md`, `assets/img/prof_pic.jpg` |
+| Publications | `_bibliography/papers.bib` (`selected = {true}` puts a paper on the home page, `preview` names an image in `assets/img/publication_preview/`) |
+| News | one file per item in `_news/` |
+| Projects | one file per card in `_projects/` (`redirect:` sends the card to an external page) |
+| Social links | `_data/socials.yml` |
+| Site settings | `_config.yml` |
 
-1. **Create a repository and upload the code**
-    - Download the code as a .ZIP file
-    - Setup the code and a repo named yourusername.github.io
-    - Push the code to the repo.
+## Local preview
 
-2. **Configure GitHub Pages**
-   - Go to your repository on GitHub
-   - Navigate to Settings > Pages
-   - Under "Source", select "main" branch (or your preferred branch)
-   - Select the root folder (/) or /docs folder if you've moved the website files there
-   - Click "Save"
+The host toolchain cannot compile the native gems, so build in Docker:
 
-3. **Customize the website**
-   - Update the content in the HTML files
-   - Replace images in the static/images directory
-   - Modify CSS styles in static/css as needed
+```bash
+docker build -t shibuina-site .
+docker run --rm -u $(id -u):$(id -g) -e HOME=/tmp -v $PWD:/srv/jekyll -p 8080:8080 shibuina-site \
+  bundle exec jekyll serve --host 0.0.0.0 --port 8080 --destination /tmp/_site
+```
 
-4. **Test locally before deploying**
-   - Use VSCode "Go Live" to test the webpage before commiting to your repo
+Then open <http://localhost:8080>.
 
-5. **Push changes to GitHub**
+## Deploy
 
-6. **Access your published site**
-   - Your site will be available at `https://yourusername.github.io`
-   - GitHub Pages may take a few minutes to build and deploy your site
-
-7. **Set up a custom domain (optional)**
-   - In your repository's Settings > Pages
-   - Under "Custom domain", enter your domain name
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and pushes it to the `gh-pages` branch.
+GitHub Pages serves `gh-pages`.
