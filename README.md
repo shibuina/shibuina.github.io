@@ -1,6 +1,6 @@
 # shibuina.github.io
 
-Personal site of Đỗ Đức Anh, built with [al-folio](https://github.com/alshedivat/al-folio) v1.2 (Jekyll). The Arena 5.0
+Personal site of Do Duc Anh, built with [al-folio](https://github.com/alshedivat/al-folio) v1.2 (Jekyll). The Arena 5.0
 project page that used to live at the root is in `arena5/` and is served at <https://shibuina.github.io/arena5/>.
 
 ## Editing
