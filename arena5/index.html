@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Arena: Generating Vivid and Interactive 3D Scenes with Hierarchical 2D Inpainting">
+  <meta name="keywords" content="Scene Generation, Robotics">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Photorealistic ROS2 Simulation Framework for Developing and Benchmarking Social Navigation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+<!--  <link rel="icon" href="./static/images/favicon.svg">-->
+  <style>
+    /* Custom styles for task-modes table */
+    .task-modes {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 1.5rem;
+        color: #ffffff;
+    }
+    .task-modes th,
+    .task-modes td {
+        border: 1px solid #4a5b75;
+        padding: 0.5rem 0.75rem;
+        
+        text-align: left;
+    }
+    .task-modes th {
+        background: #ffffff;
+        color: #000000;
+    }
+    .task-modes td a {
+        color: #00b7eb;
+        text-decoration: none;
+    }
+    .task-modes td a:hover {
+        text-decoration: underline;
+    }
+    .task-modes .center {
+        text-align: center;
+    }
+    /* Custom styles for feature list */
+    .feature-item {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        color: #000000;
+    }
+    .feature-item ul {
+        list-style-type: disc; /* Ensure bullets are visible */
+        margin-left: 1.5rem;
+    }
+    .feature-item a {
+        color: #00b7eb;
+        text-decoration: none;
+    }
+    .feature-item a:hover {
+        text-decoration: underline;
+    }
+    .dvima {
+        font-weight: bold;
+        color: #000000;
+    }
+    .title.is-3 {
+        color: #000000;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Demonstrating Arena 5.0: A Photorealistic ROS2 Simulation Framework for Developing and Benchmarking Social Navigation</h1>
+          <h3 class="title is-4 conference-authors"><a target="_blank" href="https://roboticsconference.org/">RSS 2025</a></h3>
+          <div class="is-size-5 publication-authors">
+            <a class="author-block">Volodymyr Scherbyna</a><sup>2</sup>,
+            <a class="author-block">Linh Kästner</a><sup>1,2</sup>,
+            <a class="author-block">Duc Anh Do</a><sup>1</sup>,
+            <a class="author-block">Hoang Tung</a><sup>3</sup>,
+            <a class="author-block">Maximilian Ho-Kyoung Schreff</a><sup>3</sup>,
+            <a class="author-block">Eva Wiese</a><sup>2</sup>,
+            <a class="author-block">Ahmed Martban</a><sup>2</sup>,
+            <a class="author-block">Huajian Zeng</a><sup>3</sup>,
+            <a class="author-block">An Tran</a><sup>1</sup>,
+            <a class="author-block">Jonas Kreutz</a><sup>2</sup>,
+            <a class="author-block">Vu Thanh Lam</a><sup>2</sup>,
+            <a class="author-block">Ton Manh Kien</a><sup>2</sup>,
+            <a class="author-block">Harold Soh</a><sup>1</sup>,
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>National University of Singapore</span>,
+            <span class="author-block"><sup>2</sup>TUB</span>,
+            <span class="author-block"><sup>3</sup>TUM</span>,
+          </div>
+            <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>&dagger;</sup>Equal Contribution</span>
+            </div>
+           <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+<!--              <span class="link-block">-->
+<!--                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="fab fa-youtube"></i>-->
+<!--                  </span>-->
+<!--                  <span>Video</span>-->
+<!--                </a>-->
+<!--              </span>-->
+             <span class="link-block">
+               <a href="https://github.com/Arena-Rosnav"
+                  class="external-link button is-normal is-rounded is-dark">
+                 <span class="icon">
+                     <i class="fab fa-github"></i>
+                 </span>
+                 <span>Code</span>
+                 </a>
+             </span>
+<!--              <span class="link-block">-->
+<!--                <a href="https://github.com/google/nerfies/releases/tag/0.1"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="far fa-images"></i>-->
+<!--                  </span>-->
+<!--                  <span>Data</span>-->
+<!--                  </a>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section class="section" style="padding: 0; margin: 30px 0;">
+      <div class="container is-max-desktop">
+          <!-- Abstract. -->
+          <div class="columns is-centered has-text-centered">
+              <video poster="" id="" autoplay controls loop width="100%" playbackRate=2.0 style="border-radius: 5px;">
+                  <source src="./static/videos/arena_gen_video.mp4" type="video/mp4">
+              </video>
+          </div>
+      </div>
+  </section>
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <!-- Slide 1 -->
+          <div class="item item-scene1">
+            <img
+              src="./static/images/Hospital/Hospital_Level_1.png"
+              alt="Generated Scene 1"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 2 -->
+          <div class="item item-scene2">
+            <img
+              src="./static/images/Hospital/Hospital_Level_2.png"
+              alt="Generated Scene 2"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 3 -->
+          <div class="item item-scene3">
+            <img
+              src="./static/images/Hospital/Hospital_Level_3.png"
+              alt="Generated Scene 3"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 4 -->
+          <div class="item item-scene4">
+            <img
+              src="./static/images/Hospital/Hospital_Level_4.png"
+              alt="Generated Scene 4"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 5 -->
+          <div class="item item-scene5">
+            <img
+              src="./static/images/Office/Office_Level_1.png"
+              alt="Generated Scene 5"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 6 -->
+          <div class="item item-scene6">
+            <img
+              src="./static/images/Office/Office_Level_2.png"
+              alt="Generated Scene 6"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 7 -->
+          <div class="item item-scene7">
+            <img
+              src="./static/images/Office/Office_Level_3.png"
+              alt="Generated Scene 7"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 8 -->
+          <div class="item item-scene8">
+            <img
+              src="./static/images/Office/Office_Level_4.png"
+              alt="Generated Scene 8"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 9 -->
+          <div class="item item-scene9">
+            <img
+              src="./static/images/Warehouse/Warehouse_Level_1.png"
+              alt="Generated Scene 9"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+        </div>
+          <!-- Slide 10 -->
+          <div class="item item-scene10">
+            <img
+              src="./static/images/Warehouse/Warehouse_Level_2.png"
+              alt="Generated Scene 10"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 11 -->
+          <div class="item item-scene11">
+            <img
+              src="./static/images/Warehouse/Warehouse_Level_3.png"
+              alt="Generated Scene 11"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+          <!-- Slide 12 -->
+          <div class="item item-scene12">
+            <img
+              src="./static/images/Warehouse/Warehouse_Level_4.png"
+              alt="Generated Scene 12"
+              style="width:100%; height:auto; border-radius: 5px;"
+            />
+          </div>
+      </div>
+    </div>
+  </section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Building upon the foundations laid by our previous work, this paper introduces Arena 5.0, the fifth iteration of our framework for robotics social navigation development and benchmarking. Arena 5.0 provides three main contributions: 1) The complete integration of NVIDIA Isaac Gym,
+            enabling photorealistic simulations and more efficient training. It seamlessly incorporates Isaac Gym into the Arena platform, allowing the use of existing modules such as randomized environment generation, evaluation tools, ROS2 support, and the integration of planners, robot models, and APIs within Isaac
+            Gym. 2) A comprehensive benchmark of state-of-the-art social navigation strategies, evaluated on a diverse set of generated and customized worlds and scenarios of varying difficulty levels. These benchmarks provide a detailed assessment of
+            navigation planners using a wide range of social navigation metrics. 3) Extensive scenario generation and task planning modules for improved and customizable generation of social navigation scenarios, such as emergency and rescue situations.
+            The platform's performance was evaluated by generating the aforementioned benchmark and through a comprehensive user study, demonstrating significant improvements in usability and efficiency compared to previous versions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Motivation Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li>Social navigation faces challenges in bridging simulation-based research and real-world applications</li>
+            <li>Existing platforms often lack reproducibility, generalizability, and comprehensive functionality</li>
+            <li>Legacy software dependencies complicate the transition from simulation to reality</li>
+            <li>Advanced simulators present usability challenges and have restricted accessibility</li>
+            <li>Arena 5.0 provides an open-source framework integrating photorealistic simulations with practical tools</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- General Idea Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">General Idea</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li>Arena provides a unified platform for creating, testing, and benchmarking navigation algorithms</li>
+            <li>Four key components: Generate Worlds, Spawn Humans, Spawn Robots, and Benchmarking & Task Modes</li>
+            <li>Supports diverse scenarios with realistic human agents and various robot models</li>
+            <li>Integrates NVIDIA Isaac Gym, ROS2, and advanced AI models</li>
+            <li>Enables researchers to focus on algorithm development rather than simulation setup</li>
+          </ul>
+          <div class="columns is-centered">
+            <div class="column">
+              <img src="./static/images/overview.jpg" alt="Arena 5.0 Overview" style="width:100%; border-radius: 5px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-widescreen">
+        <div class="rows">
+            <div class="rows is-centered ">
+                <div class="row is-full-width">
+
+
+                    <h2 class="title is-3" style="display: flex; justify-content: center; align-items: center;"><span class="dvima">Arena Pipeline</span></h2>
+                    <!-- <img src="videos/pipeline.m4v" class="interpolation-image" alt=""
+                        style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;" /> -->
+                    <span style="font-size: 125%">
+                        <span style="font-weight: bold">Arena is a platform for developing and benchmarking navigation algorithms in human-centric social environments.</span>
+                    </span>
+                    <br>
+                        <video autoplay controls loop playsinline height="100%">
+                          <source src="./static/videos/Task_Generator.mp4"
+                                  type="video/mp4">
+                        </video>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container is-full-hd">
+  <hr class="solid">
+</div>
+
+<section class="section">
+  <div class="container is-max-desktop">
+      <div class="rows">
+          <div class="rows is-centered ">
+              <div class="row is-full-width">
+
+
+                  <h2 class="title is-3" style="display: flex; justify-content: center; align-items: center;"><span class="dvima">Features</span></h2>
+                  <!-- <img src="videos/pipeline.m4v" class="interpolation-image" alt=""
+                      style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;" /> -->
+                      <br>
+
+                      <span style="font-size: 75%">
+                        <!-- Feature: Automatic Installation -->
+                        <div class="feature-item" style="font-size: 150%"> 
+                            <ul>
+                                <li>Automatic installation script for the arena rosnav environment</li>
+                                <li>4 different simulators including <a href = "https://github.com/Arena-Rosnav#isaac">Isaac Sim</a>, <a href="https://github.com/Arena-Rosnav#unity"> Unity</a>, <a href="https://github.com/Arena-Rosnav#gazebo">Gazebo </a> and <a href="https://github.com/Arena-Rosnav#flatland">Flatland</a></li>
+                                <li>We offer prebuilt, realistic simulation <a href="https://github.com/Arena-Rosnav#supported-worlds">environments</a>, including offices, hospitals, canteens warehouses, and much more</li>
+                                <li>Dynamic Map Generation including dynamic mazes</li>
+                                <li>Variety of Task Modes for robots and pedestrians</li>
+                              </ul>
+                        </div>              
+                        <table class="task-modes" style="font-size: 150%">
+                          <thead>
+                            <tr>
+                              <th>Task Mode</th>
+                              <th>Short Description</th>
+                              <th>Robots</th>
+                              <th>Obstacles</th>
+                            </tr>
+                          </thead>
+                          <tbody style="color:#000000">
+                            <tr>
+                              <td><code>scenario</code></td>
+                              <td>load scenario file</td>
+                              <td class="center">✓</td>
+                              <td class="center">✓</td>
+                            </tr>
+                            <tr>
+                              <td><code>random</code></td>
+                              <td>generate random positions</td>
+                              <td class="center">✓</td>
+                              <td class="center">✓</td>
+                            </tr>
+                            <tr>
+                              <td><code>parametrized</code></td>
+                              <td>more fine-tuned random</td>
+                              <td class="center"></td>
+                              <td class="center">✓</td>
+                            </tr>
+                            <tr>
+                              <td><code>guided</code></td>
+                              <td>waypoint sequence</td>
+                              <td class="center">✓</td>
+                              <td class="center"></td>
+                            </tr>
+                            <tr>
+                              <td><code>explore</code></td>
+                              <td>explore map</td>
+                              <td class="center">✓</td>
+                              <td class="center"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      <div class="feature-item mt-2" style="font-size: 150%">
+                        <ul>
+                            <li>Diverse Robot Models</li>
+                            <li>Variety of <a href="https://github.com/Arena-Rosnav#supported-robots">Robots</a> including the go1 quadruped robot</li>
+                            <li>Variety of <a href = "https://github.com/Arena-Rosnav#supported-planners">Planners</a> including our own DRL planner ROSNavRL</li>
+                            <li>Variety of social force models for pedestrians</li>
+                            <li>Pipeline for evaluating approaches and analysing them based on standard metrics with our Arena Evaluation package</li>
+                            <li>Pipeline to train planner agents based on reinforcement learning approaches from stable baselines3</li>
+                            <li>Modular and flexible structure for extension of new functionalities and approaches</li>
+                            <li>Fully integrated Move Base Flex in our Arena-Rosnav ecosystem</li>
+                        </ul>
+                       
+                </span>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- New Section: Benchmarking -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Benchmarking</h2>
+        <div class="content has-text-justified">
+          <p>
+            Arena 5.0 provides comprehensive benchmarking capabilities for evaluating social navigation algorithms. The framework includes multiple metrics for assessing performance across different scenarios.
+          </p>
+          <div class="columns is-centered">
+            <div class="column">
+              <img src="./static/images/benchmark.jpg" alt="Benchmarking Results" style="width:100%; border-radius: 5px;">
+            </div>
+          </div>
+          <p>
+            The benchmarking system evaluates navigation algorithms using metrics such as:
+          </p>
+          <ul>
+            <li>Number of Collisions</li>
+            <li>Time to Reach Goal</li>
+            <li>Path Length</li>
+            <li>Time in Personal Space</li>
+            <li>Time Looking at Pedestrians</li>
+            <li>Time Seen by Pedestrians</li>
+          </ul>
+          <p>
+            These metrics provide a comprehensive assessment of both navigation efficiency and social awareness, allowing researchers to identify strengths and weaknesses in their algorithms.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <div class="rows">
+            <div class="rows is-centered ">
+                <div class="row is-full-width has-text-centered">
+                      <h2 class="title is-3"><span class="dvima">Generated Worlds</span></h2>
+                      <p style="font-size: 125%">
+                          Please select an image below to view the results.
+                      </p>
+                  </div>
+              </div>
+          </div>
+          <br>
+          <div class="columns" style="align-items: end;">
+              <div class="column is-half">
+                  <!-- <p style="font-size: 1.5em"><b>Isaac</b></p> -->
+
+                  <div class="col-md-4 col-sm-4 col-xs-4">
+                      <img src="./static/images/Office/Office_Level_1.png" width="24%" style="border-radius: 10px;" onclick="populateDemo(this, 1);">
+                      <img src="./static/images/Office/Office_Level_2.png" width="24%" style="border-radius: 10px;" onclick="populateDemo(this, 1);">
+                      <img src="./static/images/Office/Office_Level_3.png" width="24%" style="border-radius: 10px;" onclick="populateDemo(this, 1);">
+                      <img src="./static/images/Office/Office_Level_4.png" width="24%" style="border-radius: 10px;" onclick="populateDemo(this, 1);">
+                      <img src="./static/images/Warehouse/Warehouse_Level_1.png" width="24%" style="border-radius: 10px;" onclick="populateDemo(this, 1);">
+                      <img src="./static/images/Warehouse/Warehouse_Level_2.png" width="24%" style="border-radius: 10px;" onclick="populateDemo(this, 1);">
+                      <img src="./static/images/Warehouse/Warehouse_Level_3.png" width="24%" style="border-radius: 10px;" onclick="populateDemo(this, 1);">
+                      <img src="./static/images/Warehouse/Warehouse_Level_4.png" width="24%" style="border-radius: 10px;" onclick="populateDemo(this, 1);">
+                  </div>
+              </div>
+              <div class="row border rounded" style="padding-top:2px; padding-bottom:12px;">
+                  <div class="col-md-6">
+                      <video id="demo-video-1" style="border-radius: 5px;" autoplay loop muted webkit-playsinline
+                          playsinline onclick="setAttribute('controls', 'true');">
+                          <source id="expandedImg-1" src="./static/videos/restaurant.mp4" type="video/mp4">
+                      </video>
+                  </div>
+              </div>
+          </div>
+      </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <pre><code>@misc{shcherbyna12024arena40comprehensiveros2,
+      title={Arena 4.0: A Comprehensive ROS2 Development and Benchmarking Platform for Human-centric Navigation Using Generative-Model-based Environment Generation}, 
+      author={Volodymyr Shcherbyna1 and Linh Kästner and Diego Diaz and Huu Giang Nguyen and Maximilian Ho-Kyoung Schreff and Tim Lenz and Jonas Kreutz and Ahmed Martban and Huajian Zeng and Harold Soh},
+      year={2024},
+      eprint={2409.12471},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2409.12471}, }
+</code></pre>
+  </div>
+</section>
+
+  
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            <!-- This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>. -->
+            Website built upon <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>', <a href="https://wangyian-me.github.io/Architect/">ARCHITECT</a>'s and <a href="https://genesis-embodied-ai.github.io/">GENESIS</a>'s website templates. <br>"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+<script>
+
+  timeoutIds = [];
+
+  function populateDemo(imgs, num) {
+      // Get the expanded image
+      var expandImg = document.getElementById("expandedImg-" + num);
+      // Get the image text
+      var imgText = document.getElementById("imgtext-" + num);
+      var answer = document.getElementById("answer-" + num);
+
+      // Use the same src in the expanded image as the image being clicked on from the grid
+      expandImg.src = imgs.src.replace(".png", ".mp4");
+      expandImg.src = expandImg.src.replace("images", "videos");
+      var video = document.getElementById('demo-video-' + num);
+      // or video = $('.video-selector')[0];
+      video.pause()
+      video.load();
+      video.play();
+      video.removeAttribute('controls');
+
+      console.log(expandImg.src);
+      // Use the value of the alt attribute of the clickable image as text inside the expanded image
+      var qa = imgs.alt.split("[sep]");
+      imgText.innerHTML = qa[0];
+      answer.innerHTML = "";
+
+      // Show the container element (hidden with CSS)
+      expandImg.parentElement.style.display = "block";
+      for (timeoutId of timeoutIds) {
+          clearTimeout(timeoutId);
+      }
+
+      // NOTE (wliang): Modified from original to read from file instead
+      fetch(qa[1])
+          .then(response => response.text())
+          .then(contents => {
+              // Call the processData function and pass the contents as an argument
+              typeWriter(contents, 0, qa[0], num, "imgtext-", "answer-");
+          })
+          .catch(error => console.error('Error reading file:', error));
+  }
+</script>
+
+</html>
